@@ -1,0 +1,55 @@
+# A saving account class
+# Nice Teta Hirwa
+# Defines a new SavingAccount class by utilizing inheritance
+from bank_account import BankAccount
+
+##
+# SavingAccount is a sub class of BankAccount.
+# As a result, it inherits all the methods of its super class, BankAccount
+class SavingAccount(BankAccount):
+    ##
+    # constructor: its job is to initialize all the instance variables
+    # 
+    def __init__(self, initial_balance, interest_rate):
+        super().__init__(initial_balance)
+        self._rate = interest_rate
+
+    ##
+    # add interest to the balance.
+    def add_interest(self):
+        self._balance += (self._rate * self._balance)
+        # interest = self._rate + self.get_balance()
+        # self.deposit(interest)
+        
+    ##
+    # @Override
+    def monthly_adjustment(self):
+        return self.add_interest()
+  
+    ##
+    # returns a str representation of this object
+    # this method overrides the method of the same name inherited from 
+    # its super class. 
+    def __repr__(self):
+        return  super().__repr__() + "[interest_rate=%.2f]" % (self._rate)
+   
+             
+if __name__ == "__main__":   
+# sams= BankAccount(100)
+# print(sams)
+
+    s = SavingAccount(1000.0, 0.01)	
+    print(s)
+
+    s.deposit(200)
+    s.withdraw(500)
+    print("current balance (expected: 700), is:", s.get_balance())
+    s.add_interest()
+    print("current balance (expected: 707.0), is ", s.get_balance())
+
+b = s # OK.
+b.deposit(300)
+print("current balance (expected: 1003.5), is ", s.get_balance())
+
+b.add_interest()
+print("current balance (expected: 1008.5), is ", s.get_balance()) 
