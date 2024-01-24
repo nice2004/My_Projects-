@@ -1,0 +1,48 @@
+from HWcheckingaccount import BankAccount
+
+class CheckingAccount(BankAccount):
+    # class constants     # 1
+    FREE_TRANSACTION_NUMBER = 10
+    FEE_PER_TRANSACTION = 1
+
+    # defining the constructor
+    def __init__(self, amount1 = 0):
+        super().__init__(amount1)
+        # new instance variables
+        self._transactions = 0  
+
+    # overriding , you want to modify something from the superclass 
+    def deposit(self, amount):
+        super().deposit(amount)
+        self._transactions += 1
+
+    # override   
+    def withdraw(self, amount):
+        super().withdraw(amount)
+        self._transactions += 1
+
+    # presumably this method is invoked at the end of each month and deduct a fee as needed,
+    # and reset the number of transactions back at 0
+    def deduct_fee(self):
+        if self._transactions > CheckingAccount.FREE_TRANSACTION_NUMBER:
+            fee = (self._transanctions - CheckingAccount.FREE_TRANSACTION_NUMBER) * CheckingAccount.FEE_PER_TRANSACTION
+            super().withdraw(fee) # this is the same as self.withdraw(fee)
+        self._transactions = 0
+
+    # returns a str representation of this object
+    # override 
+    # string is wriiten as Class name, balance, transactions made
+    def __repr__(self):
+        return "CheckingAccount[balance =%.2f][transactions=%d]" % (self.getbalance(), self._transactions)
+    
+
+
+
+        
+
+
+        
+
+
+
+
