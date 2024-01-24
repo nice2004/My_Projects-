@@ -1,0 +1,62 @@
+#Nice Teta Hirwa
+
+# The range of Guess
+import random
+Random_Number = random.randint(1,10)
+
+#Asking the user to insert her guess
+First_Guess = int(input("Enter your guess :")) 
+
+# The conditions in which you play the guessing game
+if First_Guess > Random_Number :
+    second_guess = int(input("Too High. Enter your guess :"))
+
+    if second_guess > Random_Number :
+        Third_Guess = int(input("Too High. Enter your guess :"))
+
+        if Third_Guess != Random_Number :
+            print("You lose.")
+        else :
+             print("You got it!")
+
+##if second_guess is lower than the random number another conditions should also put forward to perform the action
+    elif second_guess < Random_Number:
+        Third_Guess = int(input("Too low. Enter your guess :"))
+
+        if Third_Guess != Random_Number :
+            print("You lose.")
+        else:
+            print("You got it!")
+    else:
+        print("You got it!")
+
+##If first guess is incorrect, another conditions should also put forward to perform the action
+elif First_Guess < Random_Number:
+    second_guess = int(input("Too low.Enter your guess: ")) 
+
+    if second_guess > Random_Number:
+        Third_Guess = int(input("Too high. Enter your guess:")) 
+
+        if Third_Guess != Random_Number:
+            print("you lose.")
+        else:
+            print("You got it!")
+
+##if second guess is too low
+    elif second_guess < Random_Number :
+        Third_Guess = int(input("Too low. Enter your guess: "))
+
+        if Third_Guess != Random_Number :
+            print("you lose.") 
+## When the answer is correct,
+
+        else:
+            print("You got it!")
+    else:
+        print("You got it!")
+    
+else:
+    print("You got it!")
+
+## It has to print the random number at the end
+print(Random_Number)
