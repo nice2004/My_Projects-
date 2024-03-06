@@ -1,0 +1,94 @@
+package edu.westmont.cs030.maze;
+
+import java.util.ArrayList;
+
+/**
+ * Represents a maze as a 2D array of {@link Cell}s.
+ */
+public class Maze {
+
+    public final Cell[][] cells;
+
+    public Maze(int numRows, int numCols) {
+        this.cells = new Cell[numRows][numCols];
+        initialize();
+        if (numCols <= 0 || numRows <= 0) {
+            throw new IllegalArgumentException("Cells or Rows shouldn't be 0");
+        }
+    }
+
+    public void connectNeighbors(Cell origin, Cell neighbor) {
+        //The cell between cell origin and cell neighbor is the cell path
+        int rowDifference = (neighbor.rowIndex() + origin.rowIndex()) / 2;
+        int colDifference = (origin.colIndex() + neighbor.colIndex()) / 2;
+        cells[rowDifference][colDifference].setPath(true);
+
+    }
+
+    public Cell getNeighbor(Cell cell, Direction dir) { // should be in the bounds limit
+        // also if it's trying to call the other instead of calling the main one
+        try {
+            if (dir.equals(Direction.EAST)) {
+                int newCol = (cell.colIndex()) + 2;
+                return cells[cell.rowIndex()][newCol];
+            } else if (dir.equals(Direction.WEST)) {
+                int newCol = (cell.colIndex()) - 2;
+                return cells[cell.rowIndex()][newCol];
+            } else if (dir.equals(Direction.NORTH)) {
+                int newRow = (cell.rowIndex()) - 2;
+                return cells[newRow][cell.colIndex()];
+            } else{
+                int newRow = (cell.rowIndex()) + 2;
+                return cells[newRow][cell.colIndex()];
+            }
+
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
+    }
+
+    public ArrayList<Cell> getNeighbors(Cell cell) {
+        // do a for index neighbor that loops through all the directions
+        ArrayList<Cell> cellArrayList = new ArrayList<>();
+        for (Direction i: Direction.values()) {
+            Cell cell1 = getNeighbor(cell, i);
+            if (cell1 != null) {
+                cellArrayList.add(cell1);
+            }
+        }
+        return cellArrayList;
+    }
+    public void initialize() {
+        for (int row = 0; row < numRows(); row++) {
+            for (int column = 0; column < numCols(); column++) {
+                cells[row][column] = new Cell(row, column);
+                cells[row][column].setPath(false);
+            }
+        }
+    }
+
+    public int numCols() {
+
+        return cells[0].length;
+    }
+
+    public int numRows() {
+        return cells.length;
+    }
+
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(Cell.WALL_TEXT.repeat(numCols() + 2)).append("\n");
+
+        for (int row = 0; row < numRows(); row++) {
+            stringBuilder.append(Cell.WALL_TEXT);
+            for (int column = 0; column < numCols(); column++) {
+                stringBuilder.append(cells[row][column].getText());
+            }
+            stringBuilder.append(Cell.WALL_TEXT).append("\n");
+        }
+        stringBuilder.append(Cell.WALL_TEXT.repeat(numCols() + 2)).append("\n");
+        return stringBuilder.toString();
+    }
+
+}
