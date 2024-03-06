@@ -1,0 +1,98 @@
+public class Cell extends Object{
+
+  /**
+   * Text to render for the cell if it's a "wall."
+   */
+  public static final String WALL_TEXT = "██";  //
+
+  /**
+   * Text to render for the cell if it's a "path."
+   */
+  public static final String PATH_TEXT = "  ";
+
+  private int rowIndex;
+  private int colIndex;
+  private boolean isPath;
+
+  public Cell (int rowIndex, int colIndex) {
+    this.colIndex = colIndex;
+    this.rowIndex = rowIndex;
+  }
+
+  public int getNeighborColIndex(Direction dir, int colLimit){
+      if (dir.equals(Direction.WEST)) {
+       int colIndex1 = colIndex - 2;
+       if(colIndex1 < 0){
+         throw new IndexOutOfBoundsException();
+       }
+       else{
+         return colIndex1;
+       }
+      }
+      else if(dir.equals(Direction.EAST)) {
+        int colIndex1 = colIndex + 2;
+        if (colIndex1 >= colLimit){
+          throw new IndexOutOfBoundsException();
+        }
+        else{
+          return colIndex1;
+        }
+      }
+    return colIndex;
+  }
+  public int getNeighborRowIndex(Direction dir, int rowLimit){
+    if (dir.equals(Direction.NORTH)) {
+      int rowIndex1 = rowIndex - 2;
+      if(rowIndex1 < 0){
+        throw new IndexOutOfBoundsException();
+      }
+      else{
+        return rowIndex1;
+      }
+    }
+    else if(dir.equals(Direction.SOUTH)) {
+      int rowIndex1 = rowIndex + 2;
+      if (rowIndex1 >= rowLimit){
+        throw new IndexOutOfBoundsException();
+      }
+      else{
+        return rowIndex1;
+      }
+    }
+    return colIndex;
+  }
+  public String getText(){
+    if (isPath){
+      return PATH_TEXT;
+    }
+    else{
+      return WALL_TEXT;
+    }
+
+  }
+  public boolean isPath(){
+    return isPath;
+  }
+  public int colIndex(){
+    return colIndex;
+  }
+  public int rowIndex(){
+    return rowIndex;
+  }
+  public void setPath(boolean path) {
+    this.isPath = path;
+  }
+
+  public String toString(){
+
+    return String.format("Cell [%2d][%2d]: %s", rowIndex, colIndex, sayIsPath());
+  }
+  private String sayIsPath(){
+    if (isPath){
+      return "PATH";
+    } else{
+      return "WALL";
+    }
+  }
+
+}
